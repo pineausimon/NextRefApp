@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import axios from '../api/axios';
-import { useAuth } from '../auth/AuthProvider';
+import axios from '../../api/axios';
+import { useAuth } from '../../auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
@@ -19,10 +19,17 @@ export default function LoginPage() {
       alert('Erreur lors de la connexion');
     }
   };
+  
+  const handleRegisterLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/register"); 
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96 space-y-4">
+        
+        <button onClick={handleRegisterLink}>S'inscrire</button>
         <h1 className="text-xl font-bold text-center">Connexion</h1>
         <input
           className="w-full border p-2 rounded"

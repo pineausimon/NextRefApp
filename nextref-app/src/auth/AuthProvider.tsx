@@ -18,8 +18,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (token) {
       const tokenPayload = jwtDecode(token);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const roles = (tokenPayload as any)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      setRole(roles);
+      const role = (tokenPayload as any)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      setRole(role);
     }
   }, [token]);
 
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(null);
     setRole(null);
   };
-
+  
   return (
     <AuthContext.Provider value={{ isAuthenticated: !!token, login, logout, role }}>
       {children}
