@@ -3,7 +3,7 @@ import LoginPage from "../features/auth/pages/LoginPage";
 import RegisterPage from "../features/auth/pages/RegisterPage";
 import HomePage from "../features/home/HomePage";
 import { PrivateRoute } from "../shared/components/PrivateRoute";
-import ContentsListPage from "../features/contents/pages/ContentsListPage";
+import ContentsSearchPage from "../features/contents/pages/ContentsSearchPage";
 import CollectionsListPage from "../features/collections/pages/CollectionsListPage";
 
 export default function AppRoutes() {
@@ -14,7 +14,7 @@ export default function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
       <Route path="/collections" element={<PrivateRoute><CollectionsListPage /></PrivateRoute>} />
-      <Route path="/contents" element={<PrivateRoute><ContentsListPage /></PrivateRoute>} />
+      <Route path="/contents" element={<PrivateRoute><ContentsSearchPage /></PrivateRoute>} />
     </Routes>
   );
 }

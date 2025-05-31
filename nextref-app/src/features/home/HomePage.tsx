@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/context/AuthContext";
+import Button from "../../shared/components/Button/button.component";
 
 export default function HomePage() {
-  const { role, logout } = useAuth();
+  const { role } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -10,25 +11,9 @@ export default function HomePage() {
       <h1 className="text-2xl font-bold">Bienvenue 👋</h1>
       <p>Rôle : {role}</p>
       <div className="flex gap-4 mt-4">
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          onClick={() => navigate("/contents")}
-        >
-          Gérer les contenus
-        </button>
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          onClick={() => navigate("/collections")}
-        >
-          Gérer les collections
-        </button>
+        <Button label="Gérer les contenus" onClick={() => navigate("/contents")} />
+        <Button label="Gérer les collections" onClick={() => navigate("/collections")} />
       </div>
-      <button
-        onClick={logout}
-        className="mt-8 bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Se déconnecter
-      </button>
     </div>
   );
 }

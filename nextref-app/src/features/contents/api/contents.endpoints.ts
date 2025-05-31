@@ -17,6 +17,12 @@ export type UpdateContentCommand = {
   description: string;
 };
 
+export type SearchContentsQuery = {
+  keyword?: string;
+  sortBy?: string;
+  limit?: number;
+}
+
 export const getContents = async () => {
   const result = await axios.get('/contents');
   return result.data;
@@ -24,6 +30,11 @@ export const getContents = async () => {
 
 export const getContentById = async (id: ContentId) => {
   const result = await axios.get(`/contents/${id}`);
+  return result.data;
+};
+
+export const searchContents = async (query: SearchContentsQuery) => {
+  const result = await axios.post('/contents/search', query);
   return result.data;
 };
 
