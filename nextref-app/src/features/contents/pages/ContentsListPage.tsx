@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { getContents } from "../api/contents.endpoints";
 
 export default function ContentsListPage() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [contents, setContents] = useState<any[]>([]);
   const navigate = useNavigate();
 
