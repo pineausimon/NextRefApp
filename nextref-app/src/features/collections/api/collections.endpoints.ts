@@ -7,8 +7,8 @@ export type CreateCollectionCommand = {
 };
 
 export type AddContentToCollectionCommand = {
-  uerId: UserId;
-  collectionId: UserCollectionId;
+  userId: UserId;
+  userCollectionId: UserCollectionId;
   contentId: ContentId;
 };
 
@@ -24,6 +24,11 @@ export const getCollectionById = async (id: UserCollectionId) => {
 
 export const createCollection = async (data: CreateCollectionCommand) => {
   const result = await axios.post('/collections', data);
+  return result.data;
+};
+
+export const addContentToCollection = async (data: AddContentToCollectionCommand) => {
+  const result = await axios.post(`/collections/${data.userCollectionId}/items`, data);
   return result.data;
 };
 

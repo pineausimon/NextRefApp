@@ -1,8 +1,10 @@
+import type { Content } from "../../../types/Content";
+
 type SearchContentProps = {
   value: string;
   onChange: (value: string) => void;
   onFocus: () => void;
-  results: any[];
+  results: Content[];
   showAutocomplete: boolean;
   onSelect: (id: string) => void;
 };
