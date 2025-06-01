@@ -1,4 +1,4 @@
-import axios from '../../../shared/api/axios';
+import axios from '../../../shared/api/axiosInstance';
 
 export interface RegisterUserCommand {
     email: string;

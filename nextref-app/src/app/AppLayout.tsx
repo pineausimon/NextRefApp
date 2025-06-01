@@ -20,9 +20,7 @@ export default function AppLayout({ children }: LayoutProps) {
                     onClick={() => navigate('/home')}
                     variant="secondary"
                 />
-
                 <div className="header-actions">
-                    {/* TODO : Add search bar with autocomplete */}
                     {isAuthenticated && (
                         <Button
                             className="header-btn logout"

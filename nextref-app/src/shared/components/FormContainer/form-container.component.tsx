@@ -30,8 +30,7 @@ export default function FormContainer({
                     <button
                         type="button"
                         className="form-container-secondary-btn"
-                        onClick={onSecondaryClick}
-                    >
+                        onClick={onSecondaryClick}>
                         {secondaryButtonLabel}
                     </button>
                 )}

@@ -1,18 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/context/AuthContext';
 import Button from '../../shared/components/Button/button.component';
+import './HomePage.css';
 
 export default function HomePage() {
-    const { role } = useAuth();
     const navigate = useNavigate();
 
     return (
-        <div className="p-6 flex flex-col items-center gap-6">
-            <h1 className="text-2xl font-bold">Bienvenue 👋</h1>
-            <p>Rôle : {role}</p>
-            <div className="flex gap-4 mt-4">
+        <div className="homeContainer">
+            <h2 className="homeTitle">Bienvenue sur NextRef</h2>
+            <div className="homeDescription">
+                NextRef est une application permettant de lister des contenus (livres, articles, vidéos, etc.), et de consigner les références de ces contenus entre eux (citations, recommandations, lien, etc.). <br/>
+                Le but étant de créer un écosysteme de connaissances et d'oeuvres, et de découvrir d'autres oeuvres partageant des références communes avec celles que vous avez déjà consultées.<br/>
+                Il est possible de créer des collections de contenus et de voir quels sont les autres contenus qui pourraient vous intéresser en se basant sur l'ensemble des références de cette collection.<br/>
+                Dans le futur, il sera possible de consulter ses collections sous forme de map/graphe (mind map, nuages de points), et de naviguer dans les contenus en suivant les références entre eux.<br/>
+            </div>
+            <div className="homeButtons">
                 <Button label="Gérer les contenus" onClick={() => navigate('/contents')} />
-                <Button label="Gérer les collections" onClick={() => navigate('/collections')} />
+                <Button label="Gérer mes collections" onClick={() => navigate('/collections')} />
             </div>
         </div>
     );

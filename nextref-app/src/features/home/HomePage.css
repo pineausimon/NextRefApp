@@ -1,0 +1,38 @@
+.homeContainer {
+    padding: 2rem;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.homeTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.homeDescription {
+    max-width: 40rem;
+    text-align: center;
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.homeRole {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.homeButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .homeButtons {
+        flex-direction: row;
+    }
+}

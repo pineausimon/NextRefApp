@@ -1,4 +1,4 @@
-import axios from '../../../shared/api/axios';
+import axios from '../../../shared/api/axiosInstance';
 import type { ContentId, UserCollectionId, UserId } from '../../../types/ids';
 
 export type CreateCollectionCommand = {
