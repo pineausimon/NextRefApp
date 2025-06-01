@@ -1,22 +1,22 @@
-import axios from "../../../shared/api/axios";
+import axios from '../../../shared/api/axios';
 
 export interface RegisterUserCommand {
-  email: string;
-  password: string;
-  userName: string;
+    email: string;
+    password: string;
+    userName: string;
 }
 
 export interface LoginUserCommand {
-  userName: string;
-  password: string;
+    userName: string;
+    password: string;
 }
 
 export const registerUser = async (command: RegisterUserCommand) => {
-  const result = await axios.post('/users/register', command);
-  return result.data;
-}
+    const result = await axios.post('/users/register', command);
+    return result.data;
+};
 
 export const loginUser = async (command: LoginUserCommand) => {
-  const result = await axios.post('/users/login', command);
-  return result.data;
-}
+    const result = await axios.post('/users/login', command);
+    return result.data;
+};
