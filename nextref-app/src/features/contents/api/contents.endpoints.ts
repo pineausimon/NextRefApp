@@ -1,26 +1,8 @@
 import axios from '../../../shared/api/axiosInstance';
 import type { ContentId } from '../../../types/ids';
-
-export type CreateContentCommand = {
-    title: string;
-    type: string;
-    publishedAt: Date;
-    description: string;
-};
-
-export type UpdateContentCommand = {
-    id: ContentId;
-    title: string;
-    type: string;
-    publishedAt: Date;
-    description: string;
-};
-
-export type SearchContentsQuery = {
-    keyword?: string;
-    sortBy?: string;
-    limit?: number;
-};
+import type { CreateContentCommand } from './models/CreateContentCommand';
+import type { SearchContentsQuery } from './models/SearchContentsQuery';
+import type { UpdateContentCommand } from './models/UpdateContentCommand';
 
 export const getContents = async () => {
     const result = await axios.get('/contents');

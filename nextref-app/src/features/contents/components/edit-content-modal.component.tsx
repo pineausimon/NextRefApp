@@ -34,7 +34,6 @@ export default function EditContentModal({ content, onClose, onSave }: EditConte
     return (
         <Modal title="Modifier le contenu" show={true} onClose={onClose}>
             <FormContainer
-                title="Modifier le contenu"
                 onSubmit={handleSubmit}
                 mainButtonLabel="Enregistrer"
                 secondaryButtonLabel="Annuler"

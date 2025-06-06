@@ -18,7 +18,7 @@ export default function SearchContent({
     onSelect,
 }: SearchContentProps) {
     return (
-        <div className="contents-search-autocomplete">
+        <div className="relative">
             <input
                 className="input input-bordered w-full"
                 type="text"
@@ -32,7 +32,7 @@ export default function SearchContent({
                     {results.map((content) => (
                         <li
                             key={content.id}
-                            className="p-2 hover:bg-primary hover:text-primary-content cursor-pointer transition"
+                            className="contents-search-autocomplete-item"
                             onClick={() => onSelect(content.id)}
                         >
                             <span className="font-semibold">{content.title}</span>
@@ -42,7 +42,9 @@ export default function SearchContent({
                 </ul>
             )}
             {showAutocomplete && results.length === 0 && (
-                <div className="contents-search-autocomplete-empty">Aucun résultat</div>
+                <div className="contents-search-autocomplete-empty">
+                    Aucun résultat
+                </div>
             )}
         </div>
     );

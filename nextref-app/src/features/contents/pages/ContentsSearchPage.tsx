@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    createContent,
     deleteContent,
     searchContents,
     updateContent,
-    type SearchContentsQuery,
 } from '../api/contents.endpoints';
 import './ContentsSearchPage.styles.css';
 import { Button } from '../../../shared/components/Button/button.component';
@@ -20,26 +20,29 @@ import {
 } from '../../collections/api/collections.endpoints';
 import { useAuth } from '../../auth/context/AuthContext';
 import AddToCollectionModal from '../components/content-add-to-collection-modal.component';
+import type { SearchContentsQuery } from '../api/models/SearchContentsQuery';
+import { CreateContentModal } from '../components/create-content-modal.component';
+import { searchContributors } from '../../contributors/api/contributors.endpoints';
+import type { CreateContentCommand } from '../api/models/CreateContentCommand';
+
+const DEFAULT_SEARCH = { keyword: '', sortBy: 'createdat', limit: 20 };
 
 export default function ContentsSearchPage() {
     const navigate = useNavigate();
     const { userId } = useAuth();
     const debounceRef = useRef<number | null>(null);
 
-    const [search, setSearch] = useState<SearchContentsQuery>({
-        keyword: '',
-        sortBy: 'createdat',
-        limit: 20,
-    });
+    const [search, setSearch] = useState<SearchContentsQuery>(DEFAULT_SEARCH);
     const [searchResults, setSearchResults] = useState<Content[]>([]);
     const [showAutocomplete, setShowAutocomplete] = useState(false);
-    const [modalType, setModalType] = useState<'edit' | 'delete' | 'addToCollection' | null>(null);
+    const [modalType, setModalType] = useState<'create' | 'edit' | 'delete' | 'addToCollection' | null>(null);
     const [selectedContent, setSelectedContent] = useState<Content | null>(null);
     const [userCollections, setUserCollections] = useState<Collection[]>([]);
 
+    const [contributorSuggestions, setContributorSuggestions] = useState<{ id: string; fullName: string }[]>([]);
     // Récupère les derniers contenus au chargement
     useEffect(() => {
-        searchContents({ keyword: '', sortBy: 'createdat', limit: 20 }).then(setSearchResults);
+        searchContents(DEFAULT_SEARCH).then(setSearchResults);
     }, []);
 
     // Debounce la recherche
@@ -47,8 +50,10 @@ export default function ContentsSearchPage() {
         if (debounceRef.current) clearTimeout(debounceRef.current);
 
         if (!search.keyword || search.keyword.trim() === '') {
-            setSearchResults([]);
-            setShowAutocomplete(false);
+            searchContents(DEFAULT_SEARCH).then((data) => {
+                setSearchResults(data);
+                setShowAutocomplete(false);
+            });
             return;
         }
 
@@ -65,7 +70,7 @@ export default function ContentsSearchPage() {
     }, [search]);
 
     const handleSelect = (contentId: string) => {
-        setSearch({ keyword: '', sortBy: 'createdat', limit: 20 });
+        setSearch(DEFAULT_SEARCH);
         setShowAutocomplete(false);
         navigate(`/contents/${contentId}`);
     };
@@ -87,6 +92,9 @@ export default function ContentsSearchPage() {
             const collections = await getUserCollections(userId);
             setUserCollections(collections);
         }
+    };
+    const openCreateContentModal = () => {
+        setModalType('create');
     };
 
     // Callbacks pour les modales
@@ -118,6 +126,26 @@ export default function ContentsSearchPage() {
         setModalType(null);
         searchContents(search).then(setSearchResults);
     };
+    
+    // Gestion de la création de contenu
+    const handleCreateContent = async (data: {
+        title: string;
+        type: string;
+        publishedAt: string;
+        description: string;
+        existingContributions: { contributorId: string; role: string }[];
+        newContributions: { fullName: string; role: string }[];
+    } ) => {
+        await createContent(data as unknown as CreateContentCommand);
+        setModalType(null);
+        searchContents(DEFAULT_SEARCH).then(setSearchResults);
+    };
+
+    // Gestion de l'autocomplete des contributeurs
+    const handleContributorSearch = async (query: string) => {
+        const suggestions = await searchContributors({ keyword: query});
+        setContributorSuggestions(suggestions);
+    };
 
     return (
         <>
@@ -141,10 +169,19 @@ export default function ContentsSearchPage() {
                     onClose={() => setModalType(null)}
                 />
             )}
+            {modalType === 'create' && (
+                <CreateContentModal
+                    show={true}
+                    onClose={() => setModalType(null)}
+                    onSubmit={handleCreateContent}
+                    contributorSuggestions={contributorSuggestions}
+                    onContributorSearch={handleContributorSearch}
+                />
+            )}
             <div className="contents-search-container">
                 <div className="contents-search-header">
                     <h2 className="text-xl font-bold">Rechercher un contenu</h2>
-                    <Button variant="primary" onClick={() => navigate('/contents/new')}>
+                    <Button variant="primary" onClick={openCreateContentModal}>
                         Ajouter un contenu
                     </Button>
                 </div>
@@ -162,7 +199,6 @@ export default function ContentsSearchPage() {
                 />
                 {(!search.keyword || !showAutocomplete) && (
                     <div>
-                        <h3 className="contents-search-list-title">Derniers contenus ajoutés</h3>
                         <ContentItemList
                             contents={searchResults}
                             onEdit={openEditContentModal}
