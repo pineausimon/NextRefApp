@@ -18,9 +18,9 @@ export default function SearchContent({
     onSelect,
 }: SearchContentProps) {
     return (
-        <div className="relative mb-8">
+        <div className="contents-search-autocomplete">
             <input
-                className="w-full border border-gray-300 p-2 rounded"
+                className="input input-bordered w-full"
                 type="text"
                 placeholder="Titre ou type du contenu..."
                 value={value}
@@ -28,11 +28,11 @@ export default function SearchContent({
                 onFocus={onFocus}
             />
             {showAutocomplete && results.length > 0 && (
-                <ul className="absolute z-10 bg-white border w-full mt-1 rounded shadow">
+                <ul className="contents-search-autocomplete-list">
                     {results.map((content) => (
                         <li
                             key={content.id}
-                            className="p-2 hover:bg-blue-100 cursor-pointer"
+                            className="p-2 hover:bg-primary hover:text-primary-content cursor-pointer transition"
                             onClick={() => onSelect(content.id)}
                         >
                             <span className="font-semibold">{content.title}</span>
@@ -42,7 +42,7 @@ export default function SearchContent({
                 </ul>
             )}
             {showAutocomplete && results.length === 0 && (
-                <div className="absolute z-10 bg-white border w-full mt-1 rounded shadow p-2 text-gray-500">
+                <div className="contents-search-autocomplete-empty">
                     Aucun résultat
                 </div>
             )}

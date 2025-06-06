@@ -1,19 +1,23 @@
-import React from 'react';
 import './modal.styles.css';
 
-type ModalProps = {
-    open: boolean;
-    onClose: () => void;
-    children: React.ReactNode;
+type Props = {
+  show: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
 };
 
-export default function Modal({ open, onClose, children }: ModalProps) {
-    if (!open) return null;
-    return (
-        <div className="modal-backdrop" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                {children}
-            </div>
+export function Modal({ show, onClose, title, children }: Props) {
+  if (!show) return null;
+  return (
+    <div className="modal-backdrop text-base-content">
+      <div className="modal-box-custom">
+        <div className="modal-header">
+          <h3 className="modal-title">{title}</h3>
+          <button className="modal-close-btn" onClick={onClose}>✕</button>
         </div>
-    );
+        <div>{children}</div>
+      </div>
+    </div>
+  );
 }

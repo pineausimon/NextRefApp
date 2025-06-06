@@ -6,7 +6,8 @@ import {
     updateContent,
     type SearchContentsQuery,
 } from '../api/contents.endpoints';
-import Button from '../../../shared/components/Button/button.component';
+import './ContentsSearchPage.styles.css';
+import { Button } from '../../../shared/components/Button/button.component';
 import SearchContent from '../components/search-content.component';
 import ContentItemList from '../components/content-item-list.component';
 import EditContentModal from '../components/edit-content-modal.component';
@@ -140,22 +141,23 @@ export default function ContentsSearchPage() {
                     onClose={() => setModalType(null)}
                 />
             )}
-            <div className="p-8 max-w-2xl mx-auto">
-                <div className="flex justify-between items-center mb-6">
+            <div className="contents-search-container">
+                <div className="contents-search-header">
                     <h2 className="text-xl font-bold">Rechercher un contenu</h2>
                     <Button
-                        variant="primary"
-                        onClick={() => navigate('/contents/new')}
-                        label="Ajouter un contenu"
-                    />
+                    variant="primary"
+                    onClick={() => navigate('/contents/new')}
+                    >
+                    Ajouter un contenu
+                    </Button>
                 </div>
                 <SearchContent
                     value={search.keyword ?? ''}
                     onChange={(val) => setSearch({ ...search, keyword: val })}
                     onFocus={() => {
-                        if (search.keyword && search.keyword.trim() !== '') {
-                            setShowAutocomplete(true);
-                        }
+                    if (search.keyword && search.keyword.trim() !== '') {
+                        setShowAutocomplete(true);
+                    }
                     }}
                     results={searchResults}
                     showAutocomplete={showAutocomplete}
@@ -163,13 +165,13 @@ export default function ContentsSearchPage() {
                 />
                 {(!search.keyword || !showAutocomplete) && (
                     <div>
-                        <h3 className="text-lg font-semibold mb-2">Derniers contenus ajoutés</h3>
-                        <ContentItemList
-                            contents={searchResults}
-                            onEdit={openEditContentModal}
-                            onDelete={openDeleteContentModal}
-                            onAddToCollection={openAddContentToCollectionModal}
-                        />
+                    <h3 className="contents-search-list-title">Derniers contenus ajoutés</h3>
+                    <ContentItemList
+                        contents={searchResults}
+                        onEdit={openEditContentModal}
+                        onDelete={openDeleteContentModal}
+                        onAddToCollection={openAddContentToCollectionModal}
+                    />
                     </div>
                 )}
             </div>

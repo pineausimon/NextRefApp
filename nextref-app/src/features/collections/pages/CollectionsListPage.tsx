@@ -6,7 +6,7 @@ import {
     type CreateCollectionCommand,
 } from '../api/collections.endpoints';
 import { useAuth } from '../../auth/context/AuthContext';
-import Modal from '../../../shared/components/Modal/modal.component';
+import { Modal } from '../../../shared/components/Modal/modal.component';
 import FormContainer from '../../../shared/components/FormContainer/form-container.component';
 
 export default function CollectionsListPage() {
@@ -55,14 +55,13 @@ export default function CollectionsListPage() {
                     </li>
                 ))}
             </ul>
-            <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+            <Modal title='Nouvelle collection' show={modalOpen} onClose={() => setModalOpen(false)}>
                 <FormContainer
                     title="Nouvelle collection"
                     onSubmit={handleAddCollection}
                     mainButtonLabel="Valider"
                     secondaryButtonLabel="Annuler"
-                    onSecondaryClick={(e) => {
-                        e.preventDefault();
+                    onSecondaryClick={() => {
                         setModalOpen(false);
                         setName('');
                     }}

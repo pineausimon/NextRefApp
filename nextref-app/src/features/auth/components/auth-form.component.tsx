@@ -7,7 +7,7 @@ type AuthFormProps = {
     onSubmit: (e: React.FormEvent) => void;
     mainButtonLabel: string;
     secondaryButtonLabel: string;
-    onSecondaryClick: (e: React.FormEvent) => void;
+    onSecondaryClick: () => void;
 };
 
 export default function AuthForm({

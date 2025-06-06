@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../shared/components/Button/button.component';
+import { Button } from '../../shared/components/Button/button.component';
 import './HomePage.css';
 
 export default function HomePage() {
@@ -15,8 +15,8 @@ export default function HomePage() {
                 Dans le futur, il sera possible de consulter ses collections sous forme de map/graphe (mind map, nuages de points), et de naviguer dans les contenus en suivant les références entre eux.<br/>
             </div>
             <div className="homeButtons">
-                <Button label="Gérer les contenus" onClick={() => navigate('/contents')} />
-                <Button label="Gérer mes collections" onClick={() => navigate('/collections')} />
+                <Button onClick={() => navigate('/contents')}>Gérer les contenus</Button>
+                <Button onClick={() => navigate('/collections')}>Gérer mes collections</Button>
             </div>
         </div>
     );

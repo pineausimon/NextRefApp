@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from '../../../shared/components/Modal/modal.component';
+import { Modal } from '../../../shared/components/Modal/modal.component';
 import FormContainer from '../../../shared/components/FormContainer/form-container.component';
 import type { Content } from '../../../types/Content';
 
@@ -32,72 +32,70 @@ export default function EditContentModal({ content, onClose, onSave }: EditConte
     };
 
     return (
-        <Modal open={true} onClose={onClose}>
+        <Modal title="Modifier le contenu" show={true} onClose={onClose}>
             <FormContainer
                 title="Modifier le contenu"
                 onSubmit={handleSubmit}
                 mainButtonLabel="Enregistrer"
                 secondaryButtonLabel="Annuler"
-                onSecondaryClick={(e) => {
-                    e.preventDefault();
-                    onClose();
-                }}
+                onSecondaryClick={onClose}
             >
-                {/* ...champs comme avant... */}
-                <div className="form-field-group">
-                    <label className="form-field-label" htmlFor="title">
-                        Titre
-                    </label>
-                    <input
-                        id="title"
-                        name="title"
-                        className="form-field-input"
-                        type="text"
-                        value={form.title}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-field-group">
-                    <label className="form-field-label" htmlFor="type">
-                        Type
-                    </label>
-                    <input
-                        id="type"
-                        name="type"
-                        className="form-field-input"
-                        type="text"
-                        value={form.type}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-field-group">
-                    <label className="form-field-label" htmlFor="publishedAt">
-                        Date de publication
-                    </label>
-                    <input
-                        id="publishedAt"
-                        name="publishedAt"
-                        className="form-field-input"
-                        type="date"
-                        value={form.publishedAt.toString().slice(0, 10)} // Format YYYY-MM-DD
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-field-group">
-                    <label className="form-field-label" htmlFor="description">
-                        Description
-                    </label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        className="form-field-input"
-                        value={form.description}
-                        onChange={handleChange}
-                        rows={3}
-                    />
+                <div className="flex flex-col gap-4">
+                    <div className="form-control w-full">
+                        <label className="label" htmlFor="title">
+                            <span className="label-text">Titre</span>
+                        </label>
+                        <input
+                            id="title"
+                            name="title"
+                            className="input input-bordered w-full"
+                            type="text"
+                            value={form.title}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-control w-full">
+                        <label className="label" htmlFor="type">
+                            <span className="label-text">Type</span>
+                        </label>
+                        <input
+                            id="type"
+                            name="type"
+                            className="input input-bordered w-full"
+                            type="text"
+                            value={form.type}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-control w-full">
+                        <label className="label" htmlFor="publishedAt">
+                            <span className="label-text">Date de publication</span>
+                        </label>
+                        <input
+                            id="publishedAt"
+                            name="publishedAt"
+                            className="input input-bordered w-full"
+                            type="date"
+                            value={form.publishedAt.toString().slice(0, 10)}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-control w-full">
+                        <label className="label" htmlFor="description">
+                            <span className="label-text">Description</span>
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            className="textarea textarea-bordered w-full"
+                            value={form.description}
+                            onChange={handleChange}
+                            rows={3}
+                        />
+                    </div>
                 </div>
             </FormContainer>
         </Modal>

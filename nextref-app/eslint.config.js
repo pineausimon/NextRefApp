@@ -21,7 +21,10 @@ export default tseslint.config(
     },
     settings: {
       'import/resolver': {
-        typescript: {},
+        typescript: {
+          alwaysTryTypes: true,
+          extensions: ['.ts', '.tsx', '.js', '.jsx', '.mts'],
+        },
       },
     },
     rules: {

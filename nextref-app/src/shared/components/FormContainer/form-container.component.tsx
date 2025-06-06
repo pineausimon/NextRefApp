@@ -1,17 +1,16 @@
-import React from 'react';
+import { Button } from '../Button/button.component';
 import './form-container.styles.css';
 
 type FormContainerProps = {
-    title: string;
+    title?: string;
     children: React.ReactNode;
     onSubmit: (e: React.FormEvent) => void;
     mainButtonLabel: string;
-    onSecondaryClick?: (e: React.FormEvent) => void;
+    onSecondaryClick?: () => void;
     secondaryButtonLabel?: string;
 };
 
 export default function FormContainer({
-    title,
     children,
     onSubmit,
     mainButtonLabel,
@@ -19,22 +18,20 @@ export default function FormContainer({
     secondaryButtonLabel,
 }: FormContainerProps) {
     return (
-        <div className="form-container-bg">
-            <form className="form-container" onSubmit={onSubmit}>
-                <h1 className="form-container-title">{title}</h1>
+        <>
+            <form className="form-card-body" onSubmit={onSubmit}>
                 {children}
-                <button className="form-container-main-btn" type="submit">
-                    {mainButtonLabel}
-                </button>
+                <Button type="submit">{mainButtonLabel}</Button>
                 {secondaryButtonLabel && onSecondaryClick && (
-                    <button
+                    <Button
                         type="button"
-                        className="form-container-secondary-btn"
-                        onClick={onSecondaryClick}>
+                        variant="secondary"
+                        onClick={onSecondaryClick}
+                    >
                         {secondaryButtonLabel}
-                    </button>
+                    </Button>
                 )}
             </form>
-        </div>
+        </>
     );
 }

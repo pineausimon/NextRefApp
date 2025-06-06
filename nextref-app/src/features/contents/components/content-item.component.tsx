@@ -20,7 +20,7 @@ export default function ContentItem({
 }: ContentItemProps) {
     return (
         <li
-            className={`flex items-center justify-between border rounded p-4 hover:bg-blue-50 cursor-pointer transition ${className}`}
+            className={`card card-bordered flex flex-row items-center justify-between p-4 hover:bg-base-200 cursor-pointer transition ${className}`}
             onClick={onClick}
         >
             <div>
@@ -29,35 +29,34 @@ export default function ContentItem({
             </div>
             <div className="flex gap-3 ml-4">
                 <button
-                    className="p-1 rounded hover:bg-blue-100"
+                    className="btn btn-sm btn-ghost"
                     title="Modifier"
-                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     onClick={(e) => {
                         e.stopPropagation();
                         if (onEdit) onEdit();
                     }}
                 >
-                    <FaEdit className="text-blue-600" />
+                    <FaEdit className="text-primary" />
                 </button>
                 <button
-                    className="p-1 rounded hover:bg-red-100"
+                    className="btn btn-sm btn-ghost"
                     title="Supprimer"
                     onClick={(e) => {
                         e.stopPropagation();
                         if (onDelete) onDelete();
                     }}
                 >
-                    <FaTrash className="text-red-600" />
+                    <FaTrash className="text-error" />
                 </button>
                 <button
-                    className="p-1 rounded hover:bg-green-100"
+                    className="btn btn-sm btn-ghost"
                     title="Ajouter à une collection"
                     onClick={(e) => {
                         e.stopPropagation();
                         if (onAddToCollection) onAddToCollection();
                     }}
                 >
-                    <FaPlus className="text-green-600" />
+                    <FaPlus className="text-success" />
                 </button>
             </div>
         </li>

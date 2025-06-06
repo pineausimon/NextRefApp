@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import AuthForm from '../components/auth-form.component';
+import Input from '../../../shared/components/Input/input.component';
 
 export default function RegisterPage() {
     const { login } = useAuth();
@@ -22,61 +23,51 @@ export default function RegisterPage() {
         }
     };
 
-    const handleLoginLink = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleLoginLink = async () => {
         navigate('/login');
     };
 
-    return (
-        <AuthForm
-            title="Inscription"
-            fields={
-                <>
-                    <div className="form-field-group">
-                        <label className="form-field-label" htmlFor="email">
-                            Email
-                        </label>
-                        <input
-                            id="email"
-                            className="form-field-input"
-                            type="text"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-field-group">
-                        <label className="form-field-label" htmlFor="username">
-                            Nom d'utilisateur
-                        </label>
-                        <input
-                            id="username"
-                            className="form-field-input"
-                            type="text"
-                            placeholder="Nom d'utilisateur"
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-field-group">
-                        <label className="form-field-label" htmlFor="password">
-                            Mot de passe
-                        </label>
-                        <input
-                            id="password"
-                            className="form-field-input"
-                            type="password"
-                            placeholder="Mot de passe"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                </>
-            }
-            onSubmit={handleSubmit}
-            mainButtonLabel="S'inscrire"
-            secondaryButtonLabel="Se connecter"
-            onSecondaryClick={handleLoginLink}
-        />
+    return ( <div className="flex items-center justify-center min-h-[60vh] bg-base-200">
+    <div className="card w-full max-w-md bg-base-100 shadow-xl p-6">
+      <AuthForm
+        title="Inscription"
+        fields={
+          <>
+            <Input
+              id="email"
+              label="Email"
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+            />
+            <Input
+              id="username"
+              label="Nom d'utilisateur"
+              type="text"
+              placeholder="Nom d'utilisateur"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              autoComplete="username"
+            />
+            <Input
+              id="password"
+              label="Mot de passe"
+              type="password"
+              placeholder="Mot de passe"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+            />
+          </>
+        }
+        onSubmit={handleSubmit}
+        mainButtonLabel="S'inscrire"
+        secondaryButtonLabel="Se connecter"
+        onSecondaryClick={handleLoginLink}
+      />
+    </div>
+  </div>
     );
 }
