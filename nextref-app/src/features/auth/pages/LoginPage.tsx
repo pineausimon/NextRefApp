@@ -55,7 +55,7 @@ export default function LoginPage() {
         }
         onSubmit={handleSubmit}
         mainButtonLabel="Se connecter"
-        secondaryButtonLabel="S'inscrire"
+        secondaryButtonLabel="Créer un compte"
         onSecondaryClick={handleRegisterLink}
       />
     </div>

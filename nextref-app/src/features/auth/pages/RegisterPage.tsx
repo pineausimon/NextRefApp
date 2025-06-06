@@ -64,7 +64,7 @@ export default function RegisterPage() {
         }
         onSubmit={handleSubmit}
         mainButtonLabel="S'inscrire"
-        secondaryButtonLabel="Se connecter"
+        secondaryButtonLabel="J'ai déjà un compte"
         onSecondaryClick={handleLoginLink}
       />
     </div>

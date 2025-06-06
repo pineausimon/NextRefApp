@@ -11,6 +11,7 @@ type FormContainerProps = {
 };
 
 export default function FormContainer({
+    title,
     children,
     onSubmit,
     mainButtonLabel,
@@ -20,8 +21,11 @@ export default function FormContainer({
     return (
         <>
             <form className="form-card-body" onSubmit={onSubmit}>
+                {title && (
+                    <h1 className="form-card-title">{title}</h1>
+                )}
                 {children}
-                <Button type="submit">{mainButtonLabel}</Button>
+                <Button className='btn-primary' type="submit">{mainButtonLabel}</Button>
                 {secondaryButtonLabel && onSecondaryClick && (
                     <Button
                         type="button"
