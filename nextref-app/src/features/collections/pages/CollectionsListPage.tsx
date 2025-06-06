@@ -55,7 +55,7 @@ export default function CollectionsListPage() {
                     </li>
                 ))}
             </ul>
-            <Modal title='Nouvelle collection' show={modalOpen} onClose={() => setModalOpen(false)}>
+            <Modal title="Nouvelle collection" show={modalOpen} onClose={() => setModalOpen(false)}>
                 <FormContainer
                     title="Nouvelle collection"
                     onSubmit={handleAddCollection}

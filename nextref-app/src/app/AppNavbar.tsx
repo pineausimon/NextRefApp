@@ -6,7 +6,9 @@ export function AppNavbar() {
     return (
         <nav className="navbar-custom">
             <div className="navbar-title">
-                <a href="/home" className="btn btn-ghost text-xl font-semibold">NextRef</a>
+                <a href="/home" className="btn btn-ghost text-xl font-semibold">
+                    NextRef
+                </a>
             </div>
             <div className="navbar-actions">
                 <Button variant="secondary" onClick={logout}>

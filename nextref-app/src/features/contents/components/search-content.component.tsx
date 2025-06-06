@@ -42,9 +42,7 @@ export default function SearchContent({
                 </ul>
             )}
             {showAutocomplete && results.length === 0 && (
-                <div className="contents-search-autocomplete-empty">
-                    Aucun résultat
-                </div>
+                <div className="contents-search-autocomplete-empty">Aucun résultat</div>
             )}
         </div>
     );

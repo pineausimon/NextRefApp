@@ -144,20 +144,17 @@ export default function ContentsSearchPage() {
             <div className="contents-search-container">
                 <div className="contents-search-header">
                     <h2 className="text-xl font-bold">Rechercher un contenu</h2>
-                    <Button
-                    variant="primary"
-                    onClick={() => navigate('/contents/new')}
-                    >
-                    Ajouter un contenu
+                    <Button variant="primary" onClick={() => navigate('/contents/new')}>
+                        Ajouter un contenu
                     </Button>
                 </div>
                 <SearchContent
                     value={search.keyword ?? ''}
                     onChange={(val) => setSearch({ ...search, keyword: val })}
                     onFocus={() => {
-                    if (search.keyword && search.keyword.trim() !== '') {
-                        setShowAutocomplete(true);
-                    }
+                        if (search.keyword && search.keyword.trim() !== '') {
+                            setShowAutocomplete(true);
+                        }
                     }}
                     results={searchResults}
                     showAutocomplete={showAutocomplete}
@@ -165,13 +162,13 @@ export default function ContentsSearchPage() {
                 />
                 {(!search.keyword || !showAutocomplete) && (
                     <div>
-                    <h3 className="contents-search-list-title">Derniers contenus ajoutés</h3>
-                    <ContentItemList
-                        contents={searchResults}
-                        onEdit={openEditContentModal}
-                        onDelete={openDeleteContentModal}
-                        onAddToCollection={openAddContentToCollectionModal}
-                    />
+                        <h3 className="contents-search-list-title">Derniers contenus ajoutés</h3>
+                        <ContentItemList
+                            contents={searchResults}
+                            onEdit={openEditContentModal}
+                            onDelete={openDeleteContentModal}
+                            onAddToCollection={openAddContentToCollectionModal}
+                        />
                     </div>
                 )}
             </div>

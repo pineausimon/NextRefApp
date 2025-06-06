@@ -13,16 +13,20 @@ export default function AddToCollectionModal({
     onClose,
 }: AddToCollectionModalProps) {
     return (
-        <Modal title='Ajouter à une collection' show={true} onClose={onClose}>
+        <Modal title="Ajouter à une collection" show={true} onClose={onClose}>
             <ul className="mb-4">
                 {collections.map((col) => (
                     <li key={col.id} className="flex justify-between items-center py-2">
                         <span>{col.name}</span>
-                        <Button variant="primary" onClick={() => onAdd(col.id)}>Ajouter</Button>
+                        <Button variant="primary" onClick={() => onAdd(col.id)}>
+                            Ajouter
+                        </Button>
                     </li>
                 ))}
             </ul>
-            <Button variant="secondary" onClick={onClose}>Fermer</Button>
+            <Button variant="secondary" onClick={onClose}>
+                Fermer
+            </Button>
         </Modal>
     );
 }

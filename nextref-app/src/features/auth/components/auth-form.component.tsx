@@ -24,7 +24,8 @@ export default function AuthForm({
             onSubmit={onSubmit}
             mainButtonLabel={mainButtonLabel}
             secondaryButtonLabel={secondaryButtonLabel}
-            onSecondaryClick={onSecondaryClick}>
+            onSecondaryClick={onSecondaryClick}
+        >
             {fields}
         </FormContainer>
     );
