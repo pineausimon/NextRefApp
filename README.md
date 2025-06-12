@@ -18,12 +18,10 @@ Ce dépôt contient la solution **frontend** du projet. Le backend est accessibl
 - **React Router**
   - Routing dynamique structuré par feature
 - **Context API**
-  - Utilisé comme couche globale pour la gestion d’état léger et de hooks partagés
+  - Utilisé comme couche globale pour la gestion d’état et de hooks partagés
 - **Tailwind CSS**
-  - Styling utilitaire centralisé via des layouts de base
   - Couplé à **DaisyUI**
 - **Axios**
-  - Configuration centralisée (base URL, headers, interceptors) + Wrapper global avec gestion d’erreurs
-- **ESLint** + **Prettier**
-  - Linting et formatage automatiques avec des règles cohérentes sur tout le projet
 - **Vite**
+- **ESLint** + **Prettier**
+  - Linting et formatage automatiques
