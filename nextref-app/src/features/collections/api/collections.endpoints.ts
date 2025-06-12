@@ -1,4 +1,5 @@
 import axios from '../../../shared/api/axiosInstance';
+import { withErrorHandling } from '../../../shared/api/withErrorHandling';
 import type { ContentId, UserCollectionId, UserId } from '../../../types/ids';
 
 export type CreateCollectionCommand = {
@@ -13,23 +14,19 @@ export type AddContentToCollectionCommand = {
 };
 
 export const getUserCollections = async (userId: UserId) => {
-    const result = await axios.get(`/collections/${userId}`);
-    return result.data;
+    return withErrorHandling(axios.get(`/collections/${userId}`));
 };
 
 export const getCollectionById = async (id: UserCollectionId) => {
-    const result = await axios.get(`/collections/${id}`);
-    return result.data;
+    return withErrorHandling(axios.get(`/collections/${id}`));
 };
 
 export const createCollection = async (data: CreateCollectionCommand) => {
-    const result = await axios.post('/collections', data);
-    return result.data;
+    return withErrorHandling(axios.post('/collections', data));
 };
 
 export const addContentToCollection = async (data: AddContentToCollectionCommand) => {
-    const result = await axios.post(`/collections/${data.userCollectionId}/items`, data);
-    return result.data;
+    return withErrorHandling(axios.post(`/collections/${data.userCollectionId}/items`, data));
 };
 
 // export const updateCollection = async (data: UpdateCollectionCommand) => {

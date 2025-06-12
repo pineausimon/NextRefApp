@@ -1,35 +1,44 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    createCollection,
-    getUserCollections,
-    type CreateCollectionCommand,
-} from '../api/collections.endpoints';
+import { createCollection, getUserCollections, type CreateCollectionCommand } from '../api/collections.endpoints';
 import { useAuth } from '../../auth/context/AuthContext';
 import { Modal } from '../../../shared/components/Modal/modal.component';
 import FormContainer from '../../../shared/components/FormContainer/form-container.component';
+import { useNotification } from '../../../shared/notification/NotificationProvider';
+import { collectionMessages } from '../models/collectionMessages';
 
 export default function CollectionsListPage() {
+    const { userId } = useAuth();
+    const navigate = useNavigate();
+    const { showNotification } = useNotification();
+
     const [collections, setCollections] = useState<any[]>([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [name, setName] = useState('');
-    const { userId } = useAuth();
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (userId) {
-            getUserCollections(userId).then(setCollections);
+            getUserCollections(userId).then(result => {
+                setCollections(result.data)
+            });
         }
     }, [userId]);
 
     const handleAddCollection = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!userId) return;
-        await createCollection({ userId, name } as CreateCollectionCommand);
-        setModalOpen(false);
-        setName('');
-        // refresh list
-        getUserCollections(userId).then(setCollections);
+        try {
+            await createCollection({ userId, name } as CreateCollectionCommand);
+            setModalOpen(false);
+            setName('');
+            showNotification({ type: 'success', message: collectionMessages.success.create });
+            // refresh list
+            getUserCollections(userId).then(result => {
+                setCollections(result.data)
+            });
+        } catch {
+            showNotification({ type: 'error', message: collectionMessages.error.create });
+        }
     };
 
     return (

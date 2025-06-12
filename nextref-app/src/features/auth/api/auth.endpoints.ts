@@ -1,4 +1,5 @@
 import axios from '../../../shared/api/axiosInstance';
+import { withErrorHandling } from '../../../shared/api/withErrorHandling';
 
 export interface RegisterUserCommand {
     email: string;
@@ -12,11 +13,9 @@ export interface LoginUserCommand {
 }
 
 export const registerUser = async (command: RegisterUserCommand) => {
-    const result = await axios.post('/users/register', command);
-    return result.data;
+    return withErrorHandling(axios.post('/users/register', command));
 };
 
 export const loginUser = async (command: LoginUserCommand) => {
-    const result = await axios.post('/users/login', command);
-    return result.data;
+    return withErrorHandling(axios.post('/users/login', command));
 };

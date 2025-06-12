@@ -1,10 +1,10 @@
 import axios from '../../../shared/api/axiosInstance';
+import { withErrorHandling } from '../../../shared/api/withErrorHandling';
 
 export type SearchContributorsQuery = {
     keyword: string;
 };
 
 export const searchContributors = async (query: SearchContributorsQuery) => {
-    const result = await axios.post('/contributors/search', query);
-    return result.data;
+    return withErrorHandling(axios.post('/contributors/search', query));
 };

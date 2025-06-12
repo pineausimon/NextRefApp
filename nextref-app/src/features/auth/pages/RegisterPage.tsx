@@ -4,10 +4,13 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import AuthForm from '../components/auth-form.component';
 import Input from '../../../shared/components/Input/input.component';
+import { useNotification } from '../../../shared/notification/NotificationProvider';
+import { authMessages } from '../models/authMessages';
 
 export default function RegisterPage() {
     const { login } = useAuth();
     const navigate = useNavigate();
+    const { showNotification } = useNotification();
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,10 +19,11 @@ export default function RegisterPage() {
         e.preventDefault();
         try {
             const res = await axios.post('/users/register', { userName, email, password });
+            showNotification({ type: 'success', message: authMessages.success.register });
             login(res.data.token);
             navigate('/home');
         } catch {
-            alert("Erreur lors de l'inscription");
+            showNotification({ type: 'error', message: authMessages.error.register });
         }
     };
 

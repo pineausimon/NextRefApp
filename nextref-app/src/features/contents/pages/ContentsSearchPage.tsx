@@ -24,11 +24,15 @@ import type { SearchContentsQuery } from '../api/models/SearchContentsQuery';
 import { CreateContentModal } from '../components/create-content-modal.component';
 import { searchContributors } from '../../contributors/api/contributors.endpoints';
 import type { CreateContentCommand } from '../api/models/CreateContentCommand';
+import { contentMessages } from '../models/contentMessages';
+import type { UpdateContentCommand } from '../api/models/UpdateContentCommand';
+import { useNotification } from '../../../shared/notification/NotificationProvider';
 
 const DEFAULT_SEARCH = { keyword: '', sortBy: 'createdat', limit: 20 };
 
 export default function ContentsSearchPage() {
     const navigate = useNavigate();
+    const { showNotification } = useNotification();
     const { userId } = useAuth();
     const debounceRef = useRef<number | null>(null);
 
@@ -40,9 +44,11 @@ export default function ContentsSearchPage() {
     const [userCollections, setUserCollections] = useState<Collection[]>([]);
 
     const [contributorSuggestions, setContributorSuggestions] = useState<{ id: string; fullName: string }[]>([]);
+
     // Récupère les derniers contenus au chargement
     useEffect(() => {
-        searchContents(DEFAULT_SEARCH).then(setSearchResults);
+        searchContents(DEFAULT_SEARCH).then(res => {
+            setSearchResults(res.data);});
     }, []);
 
     // Debounce la recherche
@@ -50,16 +56,16 @@ export default function ContentsSearchPage() {
         if (debounceRef.current) clearTimeout(debounceRef.current);
 
         if (!search.keyword || search.keyword.trim() === '') {
-            searchContents(DEFAULT_SEARCH).then((data) => {
-                setSearchResults(data);
+            searchContents(DEFAULT_SEARCH).then((response) => {
+                setSearchResults(response.data);
                 setShowAutocomplete(false);
             });
             return;
         }
 
         debounceRef.current = window.setTimeout(() => {
-            searchContents(search).then((data) => {
-                setSearchResults(data);
+            searchContents(search).then((response) => {
+                setSearchResults(response.data);
                 setShowAutocomplete(true);
             });
         }, 300);
@@ -90,31 +96,33 @@ export default function ContentsSearchPage() {
         // Récupère les collections si besoin
         if (userCollections.length === 0 && userId) {
             const collections = await getUserCollections(userId);
-            setUserCollections(collections);
+            setUserCollections(collections.data);
         }
     };
     const openCreateContentModal = () => {
         setModalType('create');
     };
 
-    // Callbacks pour les modales
     const handleEditSave = async (updatedContent: Content) => {
-        await updateContent({
-            id: updatedContent.id,
-            title: updatedContent.title,
-            type: updatedContent.type,
-            publishedAt: updatedContent.publishedAt,
-            description: updatedContent.description,
-        });
+        const response = await updateContent(updatedContent as UpdateContentCommand);
+        if (response.success) {
+            showNotification({ type: 'success', message: contentMessages.success.update });
+        } else {
+            showNotification({ type: 'error', message: contentMessages.error.update });
+        }
         setModalType(null);
-        searchContents(search).then(setSearchResults);
+        searchContents(search).then(response => {
+            setSearchResults(response.data);
+        });
     };
 
     const handleDeleteConfirm = async () => {
         if (!selectedContent) return;
         await deleteContent(selectedContent.id);
         setModalType(null);
-        searchContents(search).then(setSearchResults);
+        searchContents(search).then(response => {
+            setSearchResults(response.data);
+        });
     };
     const handleCollectionAdd = async (collectionId: string) => {
         if (!selectedContent) return;
@@ -124,27 +132,30 @@ export default function ContentsSearchPage() {
             userId: userId!,
         });
         setModalType(null);
-        searchContents(search).then(setSearchResults);
+        searchContents(search).then(response => {
+            setSearchResults(response.data);
+        });
     };
     
     // Gestion de la création de contenu
-    const handleCreateContent = async (data: {
-        title: string;
-        type: string;
-        publishedAt: string;
-        description: string;
-        existingContributions: { contributorId: string; role: string }[];
-        newContributions: { fullName: string; role: string }[];
-    } ) => {
-        await createContent(data as unknown as CreateContentCommand);
+    const handleCreateContent = async (data: CreateContentCommand) => {
+        const response = await createContent(data);
+        if (response.success) {
+            showNotification({ type: 'success', message: contentMessages.success.create });
+        } else {
+            showNotification({ type: 'error', message: contentMessages.error.create });
+        }
         setModalType(null);
-        searchContents(DEFAULT_SEARCH).then(setSearchResults);
+        searchContents(DEFAULT_SEARCH).then(response => {
+            setSearchResults(response.data);
+        });
     };
 
     // Gestion de l'autocomplete des contributeurs
     const handleContributorSearch = async (query: string) => {
-        const suggestions = await searchContributors({ keyword: query});
-        setContributorSuggestions(suggestions);
+        await searchContributors({ keyword: query}).then(res => {
+            setContributorSuggestions(res.data);
+        });
     };
 
     return (

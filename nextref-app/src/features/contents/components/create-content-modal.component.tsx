@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Modal } from "../../../shared/components/Modal/modal.component";
 import FormContainer from "../../../shared/components/FormContainer/form-container.component";
 import Input from "../../../shared/components/Input/input.component";
+import type { CreateContentCommand } from "../api/models/CreateContentCommand";
 
 type ContributorSuggestion = {
   id: string;
@@ -17,14 +18,7 @@ type Contribution = {
 type Props = {
   show: boolean;
   onClose: () => void;
-  onSubmit: (data: {
-    title: string;
-    type: string;
-    publishedAt: string;
-    description: string;
-    existingContributions: { contributorId: string; role: string }[];
-    newContributions: { fullName: string; role: string }[];
-  }) => void;
+  onSubmit: (data: CreateContentCommand) => void;
   contributorSuggestions: ContributorSuggestion[];
   onContributorSearch: (query: string) => void;
 };
@@ -98,6 +92,7 @@ export function CreateContentModal({
     e.preventDefault();
     onSubmit({
       ...form,
+      publishedAt: new Date(form.publishedAt),
       existingContributions: contributions
         .filter((c) => c.contributorId)
         .map((c) => ({ contributorId: c.contributorId!, role: c.role })),

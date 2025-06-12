@@ -2,7 +2,7 @@ import { Button } from '../shared/components/Button/button.component';
 import { useAuth } from '../features/auth/context/AuthContext';
 
 export function AppNavbar() {
-    const { logout } = useAuth();
+    const { logout, isAuthenticated } = useAuth();
     return (
         <nav className="navbar-custom">
             <div className="navbar-title">
@@ -10,11 +10,12 @@ export function AppNavbar() {
                     NextRef
                 </a>
             </div>
+            { isAuthenticated && (
             <div className="navbar-actions">
                 <Button variant="secondary" onClick={logout}>
                     Se déconnecter
                 </Button>
-            </div>
+            </div>)}
         </nav>
     );
 }
