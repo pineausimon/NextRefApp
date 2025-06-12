@@ -13,7 +13,6 @@ Ce dépôt contient la solution **frontend** du projet. Le backend est accessibl
 ## 🧱 Stack Technique
 
 - **React 19 + TypeScript**
-  - Composants fonctionnels, logique extraite via des hooks personnalisés
 - **Architecture modulaire par fonctionnalités** (feature-based)
   - Chaque feature contient ses propres composants, hooks, contextes, etc.
 - **React Router**
