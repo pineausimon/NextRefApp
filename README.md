@@ -9,3 +9,22 @@ Il a depuis évolué vers l’idée de centraliser ces références dans une bas
 Ce dépôt contient la solution **frontend** du projet. Le backend est accessible ici : ➡️ https://github.com/pineausimon/NextRef
 
 ---
+
+## 🧱 Stack Technique
+
+- **React 19 + TypeScript**
+  - Composants fonctionnels, logique extraite via des hooks personnalisés
+- **Architecture modulaire par fonctionnalités** (feature-based)
+  - Chaque feature contient ses propres composants, hooks, contextes, etc.
+- **React Router**
+  - Routing dynamique structuré par feature
+- **Context API**
+  - Utilisé comme couche globale pour la gestion d’état léger et de hooks partagés
+- **Tailwind CSS**
+  - Styling utilitaire centralisé via des layouts de base
+  - Couplé à **DaisyUI**
+- **Axios**
+  - Configuration centralisée (base URL, headers, interceptors) + Wrapper global avec gestion d’erreurs
+- **ESLint** + **Prettier**
+  - Linting et formatage automatiques avec des règles cohérentes sur tout le projet
+- **Vite**
